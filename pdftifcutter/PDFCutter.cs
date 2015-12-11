@@ -19,6 +19,10 @@ namespace pdftifcutter {
         public override IWr New(string fpout) {
             return new PDFW(fpout, reader);
         }
+
+        public override int NPages {
+            get { return reader.NumberOfPages; }
+        }
     }
 
     class PDFW : IWr {

@@ -8,7 +8,7 @@
 ;--------------------------------
 
 !define APP "pdftifcutter"
-!define VER "0.1"
+!define VER "0.2"
 
 ; The name of the installer
 Name "${APP} ${VER}"

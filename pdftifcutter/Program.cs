@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace pdftifcutter {
@@ -23,11 +24,35 @@ namespace pdftifcutter {
                     using (var wr = cutter.New(fpout)) {
                         x++;
                         while (args[x] != ")") {
-                            int pi = (int.Parse(args[x]));
+                            int pi;
+                            int z0, z1;
+                            Match M;
+                            if (false) { }
+                            else if ((M = Regex.Match(args[x], "^(?<a>\\d+)\\-(?<b>\\d+)$")).Success) {
+                                z0 = Convert.ToInt32(M.Groups["a"].Value);
+                                z1 = Convert.ToInt32(M.Groups["b"].Value);
+                            }
+                            else if ((M = Regex.Match(args[x], "^(?<a>\\d+)\\-$")).Success) {
+                                z0 = Convert.ToInt32(M.Groups["a"].Value);
+                                z1 = int.MaxValue;
+                            }
+                            else if ((M = Regex.Match(args[x], "^\\-(?<b>\\d+)$")).Success) {
+                                z0 = 1;
+                                z1 = Convert.ToInt32(M.Groups["b"].Value);
+                            }
+                            else if (int.TryParse(args[x], out pi)) {
+                                z0 = z1 = pi;
+                            }
+                            else {
+                                x++;
+                                continue;
+                            }
+                            for (int z = Math.Max(1, z0); z <= Math.Min(z1, cutter.NPages); z++) {
+                                wr.Add(z);
+                            }
                             x++;
-                            wr.Add(pi);
                         }
-                        x++;
+                        x++; // ")"
                     }
                 }
             }
@@ -40,6 +65,9 @@ namespace pdftifcutter {
         private static void helpYa() {
             Console.Error.WriteLine("pdftifcutter in.pdf ( out-even.pdf 2 4 6 ) ( out-odd.pdf 1 3 5 )");
             Console.Error.WriteLine("pdftifcutter in.tif ( out-even.tif 2 4 6 ) ( out-odd.tif 1 3 5 )");
+            Console.Error.WriteLine("pdftifcutter in.tif ( out.tif 1- )");
+            Console.Error.WriteLine("pdftifcutter in.tif ( out.tif 2-3 )");
+            Console.Error.WriteLine("pdftifcutter in.tif ( out.tif 4- )");
         }
     }
 
@@ -55,6 +83,8 @@ namespace pdftifcutter {
         }
 
         public abstract IWr New(string fpout);
+
+        public abstract int NPages { get; }
     }
 
     interface IWr : IDisposable {

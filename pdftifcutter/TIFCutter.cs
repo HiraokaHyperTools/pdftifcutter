@@ -16,6 +16,10 @@ namespace pdftifcutter {
         public override IWr New(string fpout) {
             return new TIFW(fpout, tif);
         }
+
+        public override int NPages {
+            get { return FreeImage.GetPageCount(tif); }
+        }
     }
 
     class TIFW : IWr {
