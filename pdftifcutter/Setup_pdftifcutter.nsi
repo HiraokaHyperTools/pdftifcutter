@@ -1,4 +1,4 @@
-; example2.nsi
+﻿; example2.nsi
 ;
 ; This script is based on example1.nsi, but it remember the directory, 
 ; has uninstall support and (optionally) installs start menu shortcuts.
@@ -7,8 +7,14 @@
 
 ;--------------------------------
 
+Unicode true
+
 !define APP "pdftifcutter"
-!define VER "0.3"
+!system 'DefineAsmVer.exe "bin\x86\DEBUG\${APP}.exe" "!define VER ""[FVER]"" " > Appver.tmp'
+!include "Appver.tmp"
+
+!system 'MySign "bin\x86\DEBUG\${APP}.exe"'
+!finalize 'MySign "%1"'
 
 ; The name of the installer
 Name "${APP} ${VER}"
@@ -25,6 +31,8 @@ InstallDirRegKey HKLM "Software\${APP}" "Install_Dir"
 
 ; Request application privileges for Windows Vista
 RequestExecutionLevel admin
+
+XPStyle on
 
 ;--------------------------------
 
@@ -47,7 +55,7 @@ Section ""
   SetOutPath $INSTDIR
   
   ; Put file there
-  File /r /x "*.vshost.*" "bin\x86\DEBUG\*.*"
+  File /r /x "*.vshost.*" /x "*.tif" /x "*.pdf" "bin\x86\DEBUG\*.*"
   
   ; Write the installation path into the registry
   WriteRegStr HKLM "SOFTWARE\${APP}" "Install_Dir" "$INSTDIR"
@@ -72,11 +80,16 @@ SectionEnd
 Section "Uninstall"
   
   ; Remove files and uninstaller
+  Delete "$INSTDIR\1.ico"
   Delete "$INSTDIR\FreeImage.dll"
   Delete "$INSTDIR\FreeImageNET.dll"
   Delete "$INSTDIR\itextsharp.dll"
+  Delete "$INSTDIR\HiraokaHyperTools.itextsharp.dll"
   Delete "$INSTDIR\pdftifcutter.exe"
+  Delete "$INSTDIR\pdftifcutter.exe.config"
+  Delete "$INSTDIR\pdftifcutter.pdb"
   Delete "$INSTDIR\uninstall.exe"
+
 
   ; Remove registry keys
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP}"

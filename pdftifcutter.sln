@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pdftifcutter", "pdftifcutter\pdftifcutter.csproj", "{2B7D3687-BA0B-413A-8AD6-F354B314567D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pdftifcutter.tests", "pdftifcutter.tests\pdftifcutter.tests.csproj", "{926CCC53-EE0F-4CFC-AC7E-AF901EE1E4DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{2B7D3687-BA0B-413A-8AD6-F354B314567D}.Debug|x86.Build.0 = Debug|x86
 		{2B7D3687-BA0B-413A-8AD6-F354B314567D}.Release|x86.ActiveCfg = Release|x86
 		{2B7D3687-BA0B-413A-8AD6-F354B314567D}.Release|x86.Build.0 = Release|x86
+		{926CCC53-EE0F-4CFC-AC7E-AF901EE1E4DB}.Debug|x86.ActiveCfg = Debug|x86
+		{926CCC53-EE0F-4CFC-AC7E-AF901EE1E4DB}.Debug|x86.Build.0 = Debug|x86
+		{926CCC53-EE0F-4CFC-AC7E-AF901EE1E4DB}.Release|x86.ActiveCfg = Release|Any CPU
+		{926CCC53-EE0F-4CFC-AC7E-AF901EE1E4DB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9DD7A550-78BA-4EDF-B96A-29A99ADBA62F}
 	EndGlobalSection
 EndGlobal
